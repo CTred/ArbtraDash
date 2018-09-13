@@ -1,0 +1,103 @@
+<div class="register-container full-height sm-p-t-30">
+  <div class="d-flex justify-content-center flex-column full-height ">
+
+    <img src="assets/img/arbLogoName.png" alt="logo" pgRetina src1x="assets/img/logo.png" src2x="assets/img/logo_2x.png" width="199" height="76">
+    <h3>Arbtra is the easiest way to keep track of your legal documents and disputes</h3>
+    <!-- TODO: login with facebook or google account -->
+    <p>
+      Create your Arbtra account. If you have a facebook or google account, sign in with <a href="javascript:void(0)" class="text-info semi-bold">Facebook</a> or <a href="javascript:void(0)" class="text-info semi-bold">Google</a>
+    </p>
+    <form class="p-t-15" [formGroup]="registerForm" novalidate (ngSubmit)="newAccount(registerForm.value)">
+      <div class="row">
+        <div class="col-md-6">
+          <div pgFormGroupDefault class="form-group form-group-default required" [class.has-error]="validateControl('firstName') && hasError('firstName','required')">
+            <label>First Name</label>
+            <input type="text" placeholder="John" class="form-control" formControlName="firstName">
+          </div>
+          <div *ngIf="validateControl('firstName') && hasError('firstName','required')">
+            <label class="error">This field is required</label>
+          </div>          
+        </div>
+
+        <div class="col-md-6">
+          <div pgFormGroupDefault class="form-group form-group-default required" [class.has-error]="validateControl('lastName') && hasError('lastName','required')">
+            <label>Last Name</label>
+            <input type="text" placeholder="Smith" class="form-control" formControlName="lastName">
+          </div>
+          <div *ngIf="validateControl('lastName') && hasError('lastName','required')">
+            <label class="error">This field is required</label>
+          </div>          
+        </div>       
+      </div>
+
+      <div class="row">
+        <div class="col-md-12">
+          <div pgFormGroupDefault class="form-group form-group-default required" [class.has-error]="validateControl('email') && hasError('email','required') || validateControl('email') && hasError('email', 'minlength')">
+            <label>E-mail</label>
+            <input type="email"  placeholder="abc@email.com" class="form-control" formControlName="email">
+          </div>
+          <div>
+            <label class="error" *ngIf="validateControl('email') && hasError('email','required')">This field is required</label>
+          </div> 
+        </div>
+      </div>
+
+      <div class="row">
+        <div class="col-md-12">
+          <div pgFormGroupDefault class="form-group form-group-default required" [class.has-error]="validateControl('password') && hasError('password','required') || validateControl('password') && hasError('password', 'minlength')">
+            <label>Password</label>
+            <input type="password"  placeholder="Minimum of 8 Charactors" class="form-control" formControlName="password">
+          </div>
+          <div>
+            <label class="error" *ngIf="validateControl('password') && hasError('password','required')">This field is required</label>
+            <label class="error" *ngIf="validateControl('password') && hasError('password', 'minlength')">Minimum lenght of 8 characters.</label>
+          </div> 
+        </div>
+      </div>
+
+      <div class="row">
+        <div class="col-md-12">
+          <div pgFormGroupDefault class="form-group form-group-default required" [class.has-error]="validateControl('passwordConfirm') && hasError('passwordConfirm','required') || validateControl('passwordConfirm') && hasError('passwordConfirm', 'minlength')">
+            <label>Confirm your password</label>
+            <input type="password"  placeholder="Minimum of 8 Charactors" class="form-control" formControlName="passwordConfirm">
+          </div>
+          <div>
+            <!-- TODO: password check rule -->
+            <label class="error" *ngIf="validateControl('passwordConfirm') && hasError('passwordConfirm','required')">This field is required</label>
+            <label class="error" *ngIf="validateControl('passwordConfirm') && hasError('passwordConfirm', 'minlength')">Minimum lenght of 8 characters.</label>
+          </div> 
+        </div>
+      </div>
+
+      <div class="row m-t-10">
+        <div class="col-lg-6">
+          <p><small>I agree to the <a href="javascript:void(0)" class="text-info">Arbtra Terms</a> and <a href="javascript:void(0)" class="text-info">Privacy</a>.</small></p>
+        </div>
+        <div class="col-lg-6 text-right">
+          <a href="javascript:void(0)" class="text-info small">Help? Contact Support</a>
+        </div>
+      </div>
+      <button class="btn btn-primary btn-cons m-t-10" type="submit" [disabled]="!registerForm.valid">Create a new account</button>
+    </form>
+
+  </div>
+</div>
+<div class=" full-width">
+  <div class="register-container m-b-10 clearfix">
+    <div class="m-b-30 sm-m-t-20 sm-p-r-15 sm-p-b-20 clearfix d-flex-md-up">
+      <div class="col-md-2 no-padding d-flex align-items-center">
+        <img src="assets/img/demo/pages_icon.png" alt="" class="" pgRetina src1x="assets/img/demo/pages_icon.png" src2x="assets/img/demo/pages_icon_2x.png" width="60" height="60">
+      </div>
+      <div class="col-md-9 no-padding d-flex align-items-center">
+        <p class="hinted-text small inline sm-p-t-10">No part of this website or any of its contents may be reproduced, copied, modified or adapted, without the prior written consent of the author, unless otherwise indicated for stand-alone materials.</p>
+      </div>
+    </div>
+  </div>
+</div>
+
+<app-success-modal [modalHeaderText]="'Success message'"
+[modalBodyText]="'Action completed successfully'" [okButtonText]="'OK'"
+(redirectOnOk)="redirectToOwnerList()"></app-success-modal>
+
+<app-error-modal [modalHeaderText]="'Error message'"
+[modalBodyText]="errorMessage" [okButtonText]="'OK'"></app-error-modal>

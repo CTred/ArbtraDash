@@ -1,0 +1,70 @@
+<!-- TODO: FIX [footerHeight]="50" param configuration -->
+<pgcard [MinimalHeader]="true">
+  <div class="row">
+    <div class="col-md-offset-10 col-md-2">
+      <a [routerLink]="['/owner/create']">Register New Document</a>
+    </div>
+  </div>
+    <br>
+  <div class="row">
+    <div class="col-md-12">
+      <div class="table-responsive">
+        <table class="table table-striped">
+          <thead>
+            <tr>
+              <th>Document name</th>
+              <th>Parties</th>
+              <th>Registered Date</th>
+              <th></th>
+              <th></th>
+              <th></th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr *ngFor="let regdoc of arbRegDocs">
+              <td>{{regdoc.name}}</td>
+              <td *ngFor="let party of regdoc.documentParties">{{party.name}}</td>
+              <td>{{regdoc.registeredDate }}</td>
+              <td><button type="button" id="details" class="btn btn-default"
+                (click)="getRegDocDetails(regdoc.id)">Details</button></td>
+                  
+              <td><button type="button" id="update" class="btn btn-success"
+                (click)="redirectToUpdatePage(regdoc.id)">Update</button></td>
+              <td><button type="button" id="delete" class="btn btn-danger" (click)="redirectToDeletePage(regdoc.id)">Delete</button></td>
+
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+</pgcard>
+
+<page-container>
+  <div>
+    <h3>
+      Your Registered Documents
+      <small>
+        <a href="https://github.com/swimlane/ngx-datatable/blob/master/demo/basic/basic-auto.component.ts" target="_blank">
+          Source
+        </a>
+      </small>
+
+    </h3>
+    <ngx-datatable
+      class="table table-hover"
+      [rows]="rows2"
+      [loadingIndicator]="loadingIndicator"
+      [columns]="columns2"
+      [columnMode]="'force'"
+      [headerHeight]="50"
+      [footerHeight]="50"
+      [rowHeight]="50"
+      [scrollbarV]="true"
+      [reorderable]="reorderable"
+      (select)='onSelect($event)'
+      (click)="toggleExpandRow($event)">
+      
+    </ngx-datatable>
+  </div>
+</page-container>

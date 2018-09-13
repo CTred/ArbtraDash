@@ -1,0 +1,192 @@
+<pgcard  [MinimalHeader]="true">
+<ng-template #CardTitle>New Document Registration</ng-template>
+  <h1>Terms and Arbitration Conditions</h1>
+  <br>
+  <div>
+    <!-- Start Form -->
+    <form [formGroup]="documentForm" novalidate (ngSubmit)="registerDocument(documentForm.value)">
+      <div>
+
+        <!-- Upload Documents -->
+        <pgcard [Close]="false" [Collapse]="false" [Maximize]="false" [Refresh]="false">
+          <ng-template #CardTitle>Document for Registration</ng-template>
+          <div class="form-group">
+            <h3><span class="semi-bold">Upload Document</span></h3>
+            <pg-upload
+              Type="drag"
+              [Multiple]="false"
+              Action="https://jsonplaceholder.typicode.com/posts/"
+              (Change)="handleChange($event)"
+              extraClass="dropzone"
+              progressType="circle"
+              >
+              <div class="d-flex flex-column align-items-center">
+              <h4 class="semi-bold no-margin">Drop file to Upload</h4>
+              <p>or click here</p>
+              </div>
+            </pg-upload>
+
+            <div class="checkbox check-info">
+              <input type="checkbox" id="uploadCheckBox" [(ngModel)]="uploadCheckBox" [ngModelOptions]="{standalone: true}">
+              <label for="uploadCheckBox">I would like to upload this document for later access</label>
+            </div>
+            {{ uploadCheckBox }}
+          </div>
+        </pgcard>
+
+        <!-- Document Description -->
+        <pgcard [Close]="false" [Collapse]="true">
+        <ng-template #CardTitle>Tell us a bit more about this document</ng-template>
+        <div class="form-group">
+          <br>
+          <label>Document Description</label>
+
+          <!-- Document Alias -->
+          <div class="form-group form-group-default" pgFormGroupDefault>
+            <label>Create a reference name to this document</label>
+            <input type="text" formControlName="name" id="name" class="form-control input-lg">
+          </div>        
+      
+          <!-- Parties of the Document -->
+        
+          <ng-template #CardTitle>Please describe the parties related to this process</ng-template>
+          <!-- Insert Parties -->
+          <div>
+            <div class="form-group" formArrayName="documentParties">
+              <br>
+              <label>Who are parties of the agreement?</label>
+  
+              <!-- User Iteration -->
+              <div *ngFor="let user of documentForm.controls.documentParties.controls; let i=index">
+                <div [formGroupName]="i">
+                  <div class="row">
+                    <div class="col-5%" style="text-align: end">{{ 1 + i }}.</div>
+                    <div class="form-group form-group-default col-md col-30% required" pgFormGroupDefault>
+                      <label>Name</label>
+                      <input type="text" formControlName="name" class="form-control input-lg">
+                    </div>
+                    <div class="form-group form-group-default col-md col-30% required" pgFormGroupDefault>
+                      <label>e-mail</label>
+                      <input type="text" formControlName="email" class="form-control input-lg">
+                    </div>
+                    <div class="form-group form-group-default col-md col-30% required" pgFormGroupDefault>
+                      <label>ID</label>
+                      <input type="text" formControlName="guid" class="form-control input-lg">
+                    </div>
+                    <button class="btn" *ngIf="documentForm.controls.documentParties.controls.length > 1" (click)="removeRow(i, 'documentParties')" class="btn">Remove</button>
+                  </div>
+                </div>
+              </div>
+  
+            </div>
+            <button type="button" class="btn" (click)="addRow('documentParties')"><span class="semi-bold">Add Party</span></button>
+            <br><br><br>
+          </div>
+          
+          <!-- Expiry Date -->
+          <div>
+            <label>Valid for:</label>
+            <div class="row">
+              <div class="form-group form-group-default col-md col-10%" pgFormGroupDefault>
+                <input type="number" formControlName="expiryDate" id="name" class="form-control input-lg">
+              </div>
+              <div class="col-md col-30%">
+                <pg-select style="width: 40%;" formControlName="selectedOption" [PlaceHolder]="'Select Option'" AllowClear ShowSearch>
+                  <pg-option
+                  *ngFor="let option of options"
+                  [Label]="option.label"
+                  [Value]="option"
+                  [Disabled]="option.disabled">
+                  </pg-option>
+                </pg-select>
+              </div>
+            </div>
+          </div>   
+        </div>
+        </pgcard>
+
+        <!-- Arbitration Metadata -->
+        <pgcard [Close]="false" [Collapse]="true">
+          <ng-template #CardTitle>Add Arbitration Preferences</ng-template>
+          <div class="form-group">
+            <h3><span class="semi-bold">Configurations</span></h3>
+                      
+            <div class="row">
+              <!-- Number of arbiters -->
+              <div class="col-md-4">
+                <div class="form-group form-group-default required" pgFormGroupDefault [class.has-error]="validateControl('arbiterNumb') && hasError('arbiterNumb','required')">
+                  <label>No. of Arbiters</label>
+                  <input type="number" formControlName="arbiterNumb" id="arbiterNumb" class="form-control input-lg">
+                </div>
+                <div>
+                  <em class="error" *ngIf="validateControl('arbiterNumb') && hasError('arbiterNumb','required')">Inform number of arbiters</em>
+                </div>
+              </div>
+  
+              <!-- Rank of arbiters -->
+              <div class="col-md-4">
+                <div class="form-group form-group-default required" pgFormGroupDefault [class.has-error]="validateControl('arbiterRank') && hasError('arbiterRank','required')">
+                  <label>Arbiters Required Rank</label>
+                  <input type="text" formControlName="arbiterRank" id="arbiterRank" class="form-control input-lg">
+                </div>
+                <div>
+                  <em class="error" *ngIf="validateControl('arbiterRank') && hasError('arbiterRank','required')">Inform arbiter minimum qualification</em>
+                </div>
+              </div>
+  
+              <!-- TODO Arbiters Badges -->
+              <div class="col-md-4">
+                <div class="form-group form-group-default required" pgFormGroupDefault>
+                <label>Arbiter Required Specializations</label>
+                  <input type="text" formControlName="arbiterBadge" id="arbiterBadge" class="form-control input-lg">
+                </div>
+              </div>
+            </div>
+  
+            <div class="row">
+              <!-- Process Term -->       
+              <div class="col-md-4">
+                <div class="form-group form-group-default" pgFormGroupDefault [class.has-error]="validateControl('processTerm') && hasError('processTerm','required')">
+                  <label>Original Term Lenght</label> <!-- TODO: What's this? -->
+                  <input type="number" formControlName="processTerm" id="processTerm" class="form-control input-lg">
+                </div>
+                <div>
+                  <em class="error" *ngIf="validateControl('processTerm') && hasError('processTerm','required')">Inform the process term</em> 
+                </div>  
+              </div>       
+              
+              <!-- Process Additional Term -->
+              <div class="col-md-4">
+                <div class="form-group form-group-default" pgFormGroupDefault [class.has-error]="validateControl('processAdditionalTerm') && hasError('processAdditionalTerm','required')">
+                  <label>Additional Term Lenght</label> <!-- TODO: What's this? -->
+                  <input type="number" formControlName="processAdditionalTerm" id="processAdditionalTerm" class="form-control input-lg">
+                </div>
+                <div>
+                  <em class="error" *ngIf="validateControl('processAdditionalTerm') && hasError('processAdditionalTerm','required')">Inform the process additional term</em> 
+                </div>  
+              </div>
+
+            </div>
+          </div>
+          </pgcard>
+        <br><br>
+  
+        <div class="form-group">
+          <div class="col-nd-offset-5 col-md-1">
+            <button type="submit" class="btn btn-info" [disabled]="!documentForm.valid">Save and Continue</button>
+          </div>
+          <div class="col-md-1">
+            <button type="button" class="btn btn-danger" (click)="redirectToOwnerList()">Clear All</button>
+          </div>
+        </div>
+      </div>
+    </form>
+  </div>
+</pgcard>
+
+<app-success-modal [modalHeaderText]="'Success message'"
+[modalBodyText]="'Action completed successfully'" [okButtonText]="'OK'"
+(redirectOnOk)="redirectToOwnerList()"></app-success-modal>
+
+<app-error-modal [modalHeaderText]="'Error message'"
+[modalBodyText]="errorMessage" [okButtonText]="'OK'"></app-error-modal>

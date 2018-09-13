@@ -1,0 +1,379 @@
+<!-- ***************************** -->
+<!-- STEP ONE: CASE CONFIGURATIONS -->
+<!-- ***************************** -->
+<div *ngIf="_stage == 1">
+  <pgcard  [MinimalHeader]="true">
+  <ng-template #CardTitle>Let's start!</ng-template>
+    <h1>New Case File</h1>
+    <br>
+    <div>
+      <!-- Start Form -->
+      <form [formGroup]="processForm" novalidate (ngSubmit)="createProcess(processForm.value)">
+        <div>
+
+          <!-- Arbitration Clause -->
+          <pgcard [Close]="false">
+            <ng-template #CardTitle>Let us know the arbitration conditions</ng-template>
+            <div class="form-group">
+              <h3><span class="semi-bold">Arbitration Document</span></h3>
+              <label>Registered Document</label>
+              <div class="form-group form-group-default required" pgFormGroupDefault [class.has-error]="validateControl('arbRegDocRef') && hasError('arbRegDocRef','required') || validateControl('arbRegDocRef') && hasError('arbRegDocRef', 'maxlength')">
+                <label>Hash# ID</label>
+                <input type="text" formControlName="arbRegDocRef" class="form-control input-lg">
+              </div>
+              <div>
+                <label class="error" *ngIf="validateControl('arbRegDocRef') && hasError('arbRegDocRef','required')">Registered document is required</label>
+                <label class="error" *ngIf="validateControl('arbRegDocRef') && hasError('arbRegDocRef', 'maxlength')">Maximum allowed length is 8 characters.</label>
+              </div>
+              <br>
+
+              <!-- TODO: drop document -> open -> read pdf metadata to get hash number
+              <label>Or drop it below and we'll take care of the rest</label>
+              
+              <pg-upload
+                Type="drag"
+                [Multiple]="false"
+                [Limit]="1"
+                Action="https://jsonplaceholder.typicode.com/posts/"
+                (Change)="handleChange($event)"
+                extraClass="dropzone"
+                progressType="circle"
+                >
+                <div class="d-flex flex-column align-items-center">
+                <h4 class="semi-bold no-margin">Drop files to Upload</h4>
+                <p>or click here</p>
+                </div>
+              </pg-upload>
+              -->
+            </div>
+
+            <div class="row justify-content-center" style="margin-left: 13pt">
+              <div class="col-4">
+                <button type="button" class="btn" (click)="newArbitrationClause()">I don't have an arbitration clause</button> <!-- TODO: onClick opens modal warning and populate with standard arbitration clause -->
+                <br>
+                TODO: Missing button function. See newfile.component.html
+              </div>
+            </div>
+          </pgcard>
+
+          <!-- Parties to the Process -->
+          <pgcard [Close]="false" [Collapse]="true">
+          <ng-template #CardTitle>Please describe the parties related to this process</ng-template>
+      
+          <!-- Insert Plaintiffs -->
+          <div>
+            <div class="form-group" formArrayName="plaintiffs">
+              <h3><span class="semi-bold">Plaintiffs and Attorneys</span></h3>
+
+              <!-- User Iteration Plaintiff -->
+              <label>Please inform all plaintiffs related to the case</label>
+              <div *ngFor="let user of processForm.controls.plaintiffs.controls; let i=index">
+                <div [formGroupName]="i">
+                  <div class="row">
+                    <div class="col-10%" style="text-align: end">{{ 1 + i }}.</div>
+                    <div class="form-group form-group-default col-md col-45% required" pgFormGroupDefault>
+                      <label>Name</label>
+                      <input type="text" formControlName="name" class="form-control input-lg">
+                    </div>
+                    <div class="form-group form-group-default col-md col-45% required" pgFormGroupDefault>
+                      <label>ID</label>
+                      <input type="text" formControlName="guid" class="form-control input-lg">
+                    </div>
+                    <button class="btn" *ngIf="processForm.controls.plaintiffs.controls.length > 1" (click)="removeRow(i, 'plaintiffs')" class="btn">Remove</button>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <!-- User Iteration Attorney -->
+            <div class="form-group" formArrayName="plaintiffsRep">
+              <label>Please inform all attorneys related to the case (optional)</label>
+              <div *ngFor="let user of processForm.controls.plaintiffsRep.controls; let j=index">
+                <div [formGroupName]="j">
+                  <div class="row">
+                    <div class="col-10%" style="text-align: end">{{ 1 + j }}.</div>
+                    <div class="form-group form-group-default col-md col-45%" pgFormGroupDefault>
+                      <label>Name</label>
+                      <input type="text" formControlName="name" class="form-control input-lg">
+                    </div>
+                    <div class="form-group form-group-default col-md col-45%" pgFormGroupDefault>
+                      <label>ID</label>
+                      <input type="text" formControlName="guid" class="form-control input-lg">
+                    </div>
+                    <button class="btn" *ngIf="processForm.controls.plaintiffsRep.controls.length > 1" (click)="removeRow(j, 'plaintiffsRep')" class="btn">Remove</button>
+                  </div>
+                </div>
+              </div>
+            </div>
+                      
+            <div style="margin-left: 13pt">
+              <button type="button" class="btn" (click)="addRow('plaintiffs')">Add Plaintiff</button>
+              <button type="button" class="btn" (click)="addRow('plaintiffsRep')">Add Attorney</button>
+              <br><br>
+            </div>
+          </div>
+          
+          <!-- Insert Defendants -->
+          <div>
+            <div class="form-group" formArrayName="defendants">
+              <h3><span class="semi-bold">Defendants</span></h3>
+              <label>Who are we up against?</label>
+
+              <!-- User Iteration -->
+              <div *ngFor="let user of processForm.controls.defendants.controls; let i=index">
+                <div [formGroupName]="i">
+                  <div class="row">
+                    <div class="col-5%" style="text-align: end">{{ 1 + i }}.</div>
+                    <div class="form-group form-group-default col-md col-45% required" pgFormGroupDefault>
+                      <label>Name</label>
+                      <input type="text" formControlName="name" class="form-control input-lg">
+                    </div>
+                    <div class="form-group form-group-default col-md col-45% required" pgFormGroupDefault>
+                      <label>ID</label>
+                      <input type="text" formControlName="guid" class="form-control input-lg">
+                    </div>
+                    <button class="btn" *ngIf="processForm.controls.defendants.controls.length > 1" (click)="removeRow(i, 'defendants')" class="btn">Remove</button>
+                  </div>
+                </div>
+              </div>
+
+            </div>
+            <button type="button" class="btn" (click)="addRow('defendants')"><span class="semi-bold">Add Defendant</span></button>
+            <br><br>
+          </div>
+          </pgcard>
+
+          <!-- Configurations -->
+          <pgcard [Close]="false" [Collapse]="true">
+          <ng-template #CardTitle>Add Configurations and Preferences</ng-template>
+          <div class="form-group">
+            <h3><span class="semi-bold">Configurations</span></h3>
+            <label>How the process will carry out</label>
+
+
+            <!-- Process Alias -->
+            <div class="form-group form-group-default" pgFormGroupDefault>
+              <label>Create a reference name to this process</label>
+              <input type="text" formControlName="processAlias" id="processAlias" class="form-control input-lg">
+            </div>        
+        
+            <div class="row">
+              <!-- Number of arbiters -->
+              <div class="col-md-4">
+                <div class="form-group form-group-default required" pgFormGroupDefault [class.has-error]="validateControl('arbiterNumb') && hasError('arbiterNumb','required')">
+                  <label>No. of Arbiters</label>
+                  <input type="text" formControlName="arbiterNumb" id="arbiterNumb" class="form-control input-lg">
+                </div>
+                <div>
+                  <label class="error" *ngIf="validateControl('arbiterNumb') && hasError('arbiterNumb','required')">Inform number of arbiters</label>
+                </div>
+              </div>
+
+              <!-- Rank of arbiters -->
+              <div class="col-md-4">
+                <div class="form-group form-group-default required" pgFormGroupDefault [class.has-error]="validateControl('arbiterRank') && hasError('arbiterRank','required')">
+                  <label>Arbiters Required Rank</label>
+                  <input type="text" formControlName="arbiterRank" id="arbiterRank" class="form-control input-lg">
+                </div>
+                <div>
+                  <label class="error" *ngIf="validateControl('arbiterRank') && hasError('arbiterRank','required')">Inform arbiter minimum qualification</label>
+                </div>
+              </div>
+
+              <!-- TODO Arbiters Badges -->
+              <div class="col-md-4">
+                <div class="form-group form-group-default" pgFormGroupDefault>
+                <label>Arbiter Required Specializations</label>
+                  <input type="text" formControlName="arbiterBadge" id="arbiterBadge" class="form-control input-lg">
+                </div>
+              </div>
+            </div>
+
+            <!-- Process Term -->
+            <div class="form-group form-group-default col-sm-4" pgFormGroupDefault [class.has-error]="validateControl('processTerm') && hasError('processTerm','required')">
+              <label>Original Term Lenght</label> <!-- TODO: What's this? -->
+              <input type="number" formControlName="processTerm" id="processTerm" class="form-control input-lg">
+            </div>
+            <div>
+              <label class="error" *ngIf="validateControl('processTerm') && hasError('processTerm','required')">Inform the process term</label> 
+            </div>          
+
+            <!-- Process Additional Term -->
+            <div class="form-group form-group-default col-sm-4" pgFormGroupDefault [class.has-error]="validateControl('processAdditionalTerm') && hasError('processAdditionalTerm','required')">
+              <label>Additional Term Lenght</label> <!-- TODO: What's this? -->
+              <input type="number" formControlName="processAdditionalTerm" id="processAdditionalTerm" class="form-control input-lg">
+            </div>
+            <div>
+              <label class="error" *ngIf="validateControl('processAdditionalTerm') && hasError('processAdditionalTerm','required')">Inform the process additional term</label> 
+            </div>   
+
+            <!-- References to other processes -->
+            <div>
+              <div class="form-group" formArrayName="processRef">
+                <label>Is this process dependant or otherwise connected to any other process?</label>
+    
+                <!-- Process Iteration -->
+                <div *ngFor="let user of processForm.controls.processRef.controls; let i=index">
+                  <div [formGroupName]="i">
+                    <div class="row">
+                      <div class="col-5%" style="text-align: end">{{ 1 + i }}.</div>
+                      <div class="form-group form-group-default col-md col-45%" pgFormGroupDefault>
+                        <label>Process ID</label>
+                        <input type="text" formControlName="processRefID" class="form-control input-lg">
+                      </div>                    
+                      <button class="btn" *ngIf="processForm.controls.processRef.controls.length > 1" (click)="removeRow(i, 'processRef')" class="btn">Remove</button>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <button type="button" class="btn" (click)="addProcessRow('processRef')"><span class="semi-bold">Add Reference</span></button>
+              <br><br>
+            </div>
+
+          </div>
+          </pgcard>
+
+          <!-- Case description and documents 
+          <pgcard [Close]="false" [Collapse]="true">
+          <ng-template #CardTitle>Write it all down: Here goes your case description and supporting documents</ng-template>
+          <div class="form-group">
+            <quill-editor [style]="{height: '550px'}" 
+              placeholder=[(ngModel)]="complainBody" ></quill-editor>
+          </div>
+          </pgcard>
+          -->
+
+          <br><br>
+    
+          <div class="form-group">
+            <div class="col-nd-offset-5 col-md-1">
+              <button type="submit" class="btn btn-info" [disabled]="!processForm.valid">Save and Continue</button>
+            </div>
+            <div class="col-md-1">
+              <button type="button" class="btn btn-danger" (click)="redirectToOwnerList()">Clear All</button>
+            </div>
+          </div>
+        </div>
+      </form>
+    </div>
+  </pgcard>
+</div>
+
+<!-- ***************************** -->
+<!--   STEP TWO: CASE DESCRIPTION  -->
+<!-- ***************************** -->
+<div *ngIf="_stage == 2">
+  <pgcard  [MinimalHeader]="true">
+  <ng-template #CardTitle>Let's start!</ng-template>
+    <h1>New Case File</h1>
+    <br>
+    <div>
+      <!-- Start Form -->
+      
+      <form [formGroup]="processDesc" novalidate (ngSubmit)="addProcessDescription(processDesc.value)">
+        <div>
+          <!-- Case description and documents -->
+          <pgcard [Close]="false" [Maximize]="false" [Refresh]="false">
+            <ng-template #CardTitle>Write it all down: Here goes your case description and supporting documents</ng-template>
+            <div>
+              {{processDesc.controls.editor.value}}
+              <quill-editor #editor [formControl]="processDesc.controls['editor']"
+                [style]="{height: '550px'}"
+                [required]="true"
+                >
+              </quill-editor>
+            </div>
+          </pgcard>
+    
+          <!-- Upload Documents -->
+          <pgcard [Close]="false" [Collapse]="true" [Maximize]="false" [Refresh]="false">
+            <ng-template #CardTitle>Upload Supporting Documents</ng-template>
+            <div class="form-group">
+              <h3><span class="semi-bold">Upload Documents</span></h3>
+              <!-- TODO: drop document -> open -> read pdf metadata to get hash number -->
+                
+              <pg-upload
+                Type="drag"
+                [Multiple]="false"
+                Action="https://jsonplaceholder.typicode.com/posts/"
+                (Change)="handleChange($event)"
+                extraClass="dropzone"
+                progressType="circle"
+                >
+                <div class="d-flex flex-column align-items-center">
+                <h4 class="semi-bold no-margin">Drop files to Upload</h4>
+                <p>or click here</p>
+                </div>
+              </pg-upload>
+            </div>
+          </pgcard>
+
+
+          <!-- Resume Pleas -->
+          <pgcard [Close]="false" [Collapse]="true" [Maximize]="false" [Refresh]="false">
+            <ng-template #CardTitle>Resume in 150 words each request related to this process</ng-template>
+            <div>
+              <div class="form-group" formArrayName="pleas">
+
+                <!-- Request Iteration -->
+                <div *ngFor="let user of processDesc.controls.pleas.controls; let i=index">
+                  <div [formGroupName]="i">
+                    <div class="row">
+                      <div class="col-5%" style="text-align: end">{{ 1 + i }}.</div>
+                      <div class="form-group form-group-default col-md col-45% required" pgFormGroupDefault>
+                        <label>Request</label>
+                        <input type="text" formControlName="request" class="form-control input-lg">
+                      </div>
+                      <button type="button" class="btn" *ngIf="processDesc.controls.pleas.controls.length > 1" (click)="removePleasRow(i, 'pleas')" >Remove</button>
+                    </div>
+                  </div>
+                </div>
+
+              </div>
+              <button type="button" class="btn" (click)="addPleasRow('pleas')"><span class="semi-bold">Add Request</span></button>
+              <br><br>
+            </div>
+          </pgcard>
+          <br><br>
+    
+          <div class="form-group">
+            <div class="col-nd-offset-5 col-md-1">
+              <button type="submit" class="btn btn-info" [disabled]="!processDesc.valid">Save and Continue</button>
+            </div>
+            <div class="col-md-1">
+              <button type="button" class="btn btn-warning" (click)="returnStage()">Return</button>
+            </div>
+            <div class="col-md-1">
+              <button type="button" class="btn btn-danger" (click)="redirectToOwnerList()">Clear All</button>
+            </div>
+          </div>
+        </div>
+      </form>
+    </div>
+  </pgcard>
+</div>
+
+<!-- ***************************** -->
+<!--  STEP THREE: REVIEW & SUBMIT  -->
+<!-- ***************************** -->
+<div *ngIf="_stage == 3">
+  <pgcard  [MinimalHeader]="true">
+  <ng-template #CardTitle>Let's start!</ng-template>
+    <h1>New Case File</h1>
+    <br>
+    
+  </pgcard>
+
+  <app-success-modal [modalHeaderText]="'Success message'"
+  [modalBodyText]="'Action completed successfully'" [okButtonText]="'OK'"
+  (redirectOnOk)="redirectToOwnerList()"></app-success-modal>
+
+  <app-error-modal [modalHeaderText]="'Error message'"
+  [modalBodyText]="errorMessage" [okButtonText]="'OK'"></app-error-modal>
+  
+</div>
+
+<div>
+    {{ _stage }}
+</div>
+

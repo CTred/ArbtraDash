@@ -1,0 +1,225 @@
+{
+  "profile": {
+    "name": "typicode"
+  },
+  "arbRegDoc": [
+    {
+      "name": "rfrf",
+      "documentParties": [
+        {
+          "name": "efef",
+          "email": "rfrfrf",
+          "guid": "efefef"
+        }
+      ],
+      "registeredDate": 1536360557722,
+      "duration": 90,
+      "expiryDate": 3,
+      "arbiterNumb": 2,
+      "arbiterRank": "afaf",
+      "arbiterBadge": "qrqrq",
+      "processTerm": 3,
+      "processAdditionalTerm": 4,
+      "pointer": null,
+      "disclosure": "NA",
+      "id": "Ft_FpF8"
+    },
+    {
+      "name": "rfeqfwe",
+      "documentParties": [
+        {
+          "name": "efwf",
+          "email": "rfrf",
+          "guid": "qfqfq"
+        }
+      ],
+      "registeredDate": 1536361081694,
+      "duration": 720,
+      "expiryDate": 2,
+      "arbiterNumb": 3,
+      "arbiterRank": "sfdf",
+      "arbiterBadge": "qwf",
+      "processTerm": 3,
+      "processAdditionalTerm": 4,
+      "pointer": null,
+      "disclosure": "NA",
+      "id": "IREpnWv"
+    },
+    {
+      "name": "rfeqfwe",
+      "documentParties": [
+        {
+          "name": "efwf",
+          "email": "rfrf",
+          "guid": "qfqfq"
+        }
+      ],
+      "registeredDate": 1536362453649,
+      "duration": 720,
+      "expiryDate": 2,
+      "arbiterNumb": 3,
+      "arbiterRank": "sfdf",
+      "arbiterBadge": "qwf",
+      "processTerm": 3,
+      "processAdditionalTerm": 4,
+      "pointer": null,
+      "disclosure": "NA",
+      "id": "1MhzG1b"
+    },
+    {
+      "name": "MGLU: Venda Monitor",
+      "documentParties": [
+        {
+          "name": "Caio",
+          "email": "caio.castro@gmail.com",
+          "guid": "4ftwq"
+        },
+        {
+          "name": "MGLU",
+          "email": "suporte@mglu.com.br",
+          "guid": "3twerq"
+        }
+      ],
+      "registeredDate": 1536365956923,
+      "duration": 360,
+      "expiryDate": 1,
+      "arbiterNumb": 5,
+      "arbiterRank": "sfff",
+      "arbiterBadge": "dfdfd",
+      "processTerm": 45,
+      "processAdditionalTerm": 15,
+      "pointer": null,
+      "disclosure": "NA",
+      "id": "gKF5vxn"
+    },
+    {
+      "name": "Televisão Adriana",
+      "documentParties": [
+        {
+          "name": "Adriana",
+          "email": "dfdf",
+          "guid": "sfsf"
+        },
+        {
+          "name": "Magazine Luiza",
+          "email": "rrfrf",
+          "guid": "efefe"
+        }
+      ],
+      "registeredDate": 1536529404008,
+      "duration": 360,
+      "expiryDate": 1,
+      "arbiterNumb": 5,
+      "arbiterRank": "4",
+      "arbiterBadge": "5",
+      "processTerm": 15,
+      "processAdditionalTerm": 5,
+      "pointer": null,
+      "disclosure": "NA",
+      "id": "KrzGg4H"
+    },
+    {
+      "name": "erere",
+      "documentParties": [
+        {
+          "name": "qwr",
+          "email": "wre",
+          "guid": "qrrre"
+        }
+      ],
+      "registeredDate": 1536538029920,
+      "duration": 4,
+      "expiryDate": 4,
+      "arbiterNumb": 2,
+      "arbiterRank": "www",
+      "arbiterBadge": "rrr",
+      "processTerm": 2,
+      "processAdditionalTerm": 1,
+      "pointer": null,
+      "disclosure": "NA",
+      "id": "z9ZU3om"
+    }
+  ],
+  "arbUser": [
+    {
+      "id": "77ec7df3-6aa4-487f-b99e-270642b22c6a",
+      "avatar": null,
+      "name": "Caio Lacerda de Castro",
+      "alias": "CaioLC#77ec",
+      "userType": "Person",
+      "email": [
+        "lcastro.caio@gmail.com"
+      ],
+      "dateCreated": "2018-09-04T03:22:43+00:00",
+      "dateTerminated": null,
+      "accountArbiter": null,
+      "accountEntityRep": null,
+      "accountPerson": null,
+      "accountResearch": null
+    },
+    {
+      "id": "f71c5a3a-57ca-4cf2-b4b1-6f2432de7cf4",
+      "avatar": null,
+      "name": "Caio2",
+      "alias": "CaioLC#f71c",
+      "userType": "Person",
+      "email": [
+        "lcastro.caio@gmail.com"
+      ],
+      "dateCreated": "2018-09-04T03:22:43+00:00",
+      "dateTerminated": null,
+      "accountArbiter": null,
+      "accountEntityRep": null,
+      "accountPerson": null,
+      "accountResearch": null
+    },
+    {
+      "id": "59cb989d-60fe-4aab-b89a-e27ffffe18cb",
+      "avatar": null,
+      "name": "Caio3",
+      "alias": "CaioLC#59cb",
+      "userType": "Person",
+      "email": [
+        "lcastro.caio@gmail.com"
+      ],
+      "dateCreated": "2018-09-04T03:22:43+00:00",
+      "dateTerminated": null,
+      "accountArbiter": null,
+      "accountEntityRep": null,
+      "accountPerson": null,
+      "accountResearch": null
+    },
+    {
+      "id": "e2cd8271-15f5-49e2-b41a-78896ff6b3fe",
+      "avatar": null,
+      "name": "Caio4",
+      "alias": "CaioLC#e2cd",
+      "userType": "Person",
+      "email": [
+        "lcastro.caio@gmail.com"
+      ],
+      "dateCreated": "2018-09-04T03:22:43+00:00",
+      "dateTerminated": null,
+      "accountArbiter": null,
+      "accountEntityRep": null,
+      "accountPerson": null,
+      "accountResearch": null
+    },
+    {
+      "firstName": "Caio",
+      "lastName": "Castro",
+      "email": "lcastro.caio@gmail.com",
+      "password": "12345678",
+      "dateCreated": 1536537135766,
+      "id": "aIN7HVm"
+    },    
+    {
+      "firstName": "Adriana",
+      "lastName": "Thielen",
+      "email": "thielen.adriana@gmail.com",
+      "password": "12345678",
+      "dateCreated": 1536538113301,
+      "id": "6CGFzZf"
+    }
+  ]
+}
